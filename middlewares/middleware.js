@@ -1,11 +1,14 @@
 //function which will check the authenticity for the roles of admin and student
 const jwt=require("jsonwebtoken")
 require("dotenv").config()
+//cookie parser 
+const cookie=require("cookie-parser")
 
 
 exports.auth=(req,res,next)=>{
     //parse the value of token 
-    const {token}=req.body
+    const token=req.body.token || req.cookie.token || req.header("Authorization").replace("Bearer ","");
+    //go to authorization header and replace the bearer_ with space and only token will remain in it which i am about to use
 
     //check if the token is present or not
     if(!token)
