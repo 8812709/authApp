@@ -2,12 +2,15 @@
 const jwt=require("jsonwebtoken")
 require("dotenv").config()
 //cookie parser 
-const cookie=require("cookie-parser")
 
 
 exports.auth=(req,res,next)=>{
-    //parse the value of token 
-    const token=req.body.token || req.cookie.token || req.header("Authorization").replace("Bearer ","");
+    try {
+        //parse the value of token 
+    const token=req.body.token || req.cookies.logincookie||req.header("Authorization").replace("Bearer ","");
+
+    console.log(req.body.token)
+    console.log(req.cookies.logincookie)
     //go to authorization header and replace the bearer_ with space and only token will remain in it which i am about to use
 
     //check if the token is present or not
@@ -32,6 +35,13 @@ exports.auth=(req,res,next)=>{
         
     }
     next()
+    } catch (error) {
+        return res.status(500).json({
+            success:false,
+            message:"Some error occured while verifying the JWT"
+        })
+    }
+    
 }
 
 exports.isStudent=(req,res,next)=>{

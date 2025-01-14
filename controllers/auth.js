@@ -95,15 +95,22 @@ exports.loginHandler=async(req,res)=>{
 
 //cokkies
       const options={
-        expires:new Date(Date.now()+3*24*60*60*1000),
+        expires:new Date(Date.now()+ 30000),
         httpOnly:true
       }
-      res.cookie("cookieName",token,options).status(200).json({
+      res.cookie("logincookie",token,options).status(200).json({
         success:true,
         token,
         user,
         message:"User logged In successfully"
       })
+
+      // res.status(200).json({
+      //   success:true,
+      //   token,
+      //   user,
+      //   message:"user logged In "
+      // })
 
     }
     else
